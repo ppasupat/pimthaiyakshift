@@ -3,6 +3,7 @@ $(function () {
 
   const SCREEN_WIDTH = 700, SCREEN_HEIGHT = 400;
   const FRAME_RATE = 8;
+  const SHIFT_CHARS = /[%+๑๒๓๔ู฿๕๖๗๘๙๐"ฎฑธํณ๊ฯญฐ,ฅฤฆฏโฌ็ษ๋ศซ.()ฉฮฺฒ์?ฬฦ]/g;
 
   // ################################
   // Utilities
@@ -11,6 +12,10 @@ $(function () {
     let regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
     let results = regex.exec(window.location.href);
     return results === null ? "" : decodeURIComponent(results[1]);
+  }
+
+  function countShift(word) {
+    return (word.match(SHIFT_CHARS) || []).length;
   }
 
 	// ################################
@@ -31,6 +36,5 @@ $(function () {
 
   resizeScreen();
   $(window).resize(resizeScreen);
-
 
 });
