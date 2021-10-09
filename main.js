@@ -18,6 +18,20 @@ $(function () {
     return (word.match(SHIFT_CHARS) || []).length;
   }
 
+  function showScene(name, callback) {
+    $('.scene').hide();
+    $('#scene-' + name).show();
+    if (callback !== void 0) callback();
+  }
+
+  function showCover(name, delay, callback) {
+    $('#cover-' + name).show();
+    setTimeout(function () {
+      $('#cover-' + name).hide();
+      if (callback !== void 0) callback();
+    }, delay);
+  }
+
 	// ################################
   // Preloading and screen resizing
 
@@ -36,5 +50,6 @@ $(function () {
 
   resizeScreen();
   $(window).resize(resizeScreen);
+  showScene('menu');
 
 });
