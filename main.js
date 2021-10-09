@@ -3,7 +3,7 @@ $(function () {
 
   const SCREEN_WIDTH = 700, SCREEN_HEIGHT = 400;
   const FRAME_RATE = 30;
-  const TIME_LIMIT = 10000;
+  const TIME_LIMIT = 60000;
   const SHIFT_CHARS = /[%+๑๒๓๔ู฿๕๖๗๘๙๐"ฎฑธํณ๊ฯญฐ,ฅฤฆฏโฌ็ษ๋ศซ.()ฉฮฺฒ์?ฬฦ]/g;
 
   const WORD_LIST_URLS = [
@@ -42,7 +42,7 @@ $(function () {
   }
 
   // ################################
-  // Timer
+  // Battle
 
   let timerHandler = null, timerStartTime = null, timerAmount = null;
 
@@ -56,10 +56,12 @@ $(function () {
 
   function updateTimer() {
     let remaining = timerAmount - (Date.now() - timerStartTime);
-    $('#timer').text((remaining / 1000).toFixed(1));
+    $('#hud-timer').text((remaining / 1000).toFixed(1));
     if (remaining <= 0) {
       stopTimer();
       setupSummary();
+    } else {
+      checkAnswer();
     }
   }
 
@@ -70,23 +72,48 @@ $(function () {
     }
   }
 
-  // ################################
-  // Battle
+  let currentScore = 0, totalNumChars = 0, targetWord = null;
 
   function setupBattle() {
+    currentScore = 0;
+    totalNumChars = 0;
+    nextQuestion();
     startTimer(TIME_LIMIT);
     showScene('battle');
-    $('#answer-box').focus();
+    $('#answer-box').val('').focus();
   }
 
   function nextQuestion() {
+    let targetIndex = Math.floor(
+      Math.random() * WORD_LISTS[currentWordList].length);
+    targetWord = WORD_LISTS[currentWordList][targetIndex];
+    $('#target-word').text(targetWord);
+    showScore();
+  }
 
+  function checkAnswer() {
+    if ($('#answer-box').val() === targetWord) {
+      currentScore += countShift(targetWord);
+      totalNumChars += targetWord.length;
+      nextQuestion();
+      $('#answer-box').val('').focus();
+    }
+  }
+
+  function showScore() {
+    $('#hud-score').text(currentScore)
+      .append('<span class=score-preview>' +
+        ' + ' + countShift(targetWord) + '</span>');
   }
 
   // ################################
   // Summary
 
   function setupSummary() {
+    $('#summary-pane').empty()
+      .append('<p>คะแนน: ' + currentScore + '</p>')
+      .append('<p class=summary-small>(หนึ่งคะแนนต่อ Shift)</p>')
+      .append('<p>จำนวนอักขระรวม: ' + totalNumChars + '</p>');
     showScene('summary');
   }
 

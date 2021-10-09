@@ -92,13 +92,70 @@ body {
   text-align: center;
 }
 
-#start-button-wrapper {
-  position: absolute;
-  left: 0; right: 0; top: 200px;
-  text-align: center;
-}
 #start-button {
   position: absolute;
-  top: 250px; left: 250px; right: 250px; height: 80px;
+  top: 250px; left: 230px; right: 230px; height: 80px;
+  font-size: 30px;
+}
+
+/* ################################ */
+/* battle scene */
+
+#hud {
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  font-size: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+#hud-score, #hud-timer {
+  margin: 5px 20px;
+}
+.score-preview {
+  color: #666;
+}
+
+#target-word {
+  position: absolute;
+  left: 0; right: 0; top: 100px;
+  font-size: 60px;
+  text-align: center;
+}
+
+#answer-box-wrapper {
+  position: absolute;  
+  top: 200px; left: 50px; right: 50px;
+  text-align: center;
+}
+#answer-box {
+  background: #222;
+  font-size: 40px;
+  line-height: 80px;
+  text-align: center;
+  color: #ccc;
+  width: 100%;
+  border: none;
+  outline: none;
+}
+#answer-box:focus {
+  background: none;
+}
+
+/* ################################ */
+/* summary scene */
+
+#summary-pane {
+  position: absolute;
+  top: 50px; left: 0; right: 0;
+  text-align: center;
+  font-size: 35px;
+}
+.summary-small {
+  font-size: 20px;
+  color: #888;
+}
+#back-button {
+  position: absolute;
+  top: 250px; left: 230px; right: 230px; height: 80px;
   font-size: 30px;
 }
