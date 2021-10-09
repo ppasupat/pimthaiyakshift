@@ -59,7 +59,7 @@ body {
   transform-origin: top left;
 }
 
-.scene, .cover {
+.scene {
   display: none;
   position: absolute;
   width: 700px;
@@ -68,15 +68,18 @@ body {
 }
 
 /* ################################ */
-/* preload scene */
+/* preload and countdown scene */
 
-#scene-preload > div {
+#scene-preload > div, #scene-countdown > div {
   height: 100%;
 }
 
 #pane-loading {
   font-size: 30px;
-  text-align: center;
+}
+
+#countdown-number {
+  font-size: 100px;
 }
 
 /* ################################ */

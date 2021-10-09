@@ -2,10 +2,14 @@ $(function () {
   'use strict';
 
   const SCREEN_WIDTH = 700, SCREEN_HEIGHT = 400;
-  const FRAME_RATE = 8;
+  const FRAME_RATE = 30;
+  const TIME_LIMIT = 10000;
   const SHIFT_CHARS = /[%+๑๒๓๔ู฿๕๖๗๘๙๐"ฎฑธํณ๊ฯญฐ,ฅฤฆฏโฌ็ษ๋ศซ.()ฉฮฺฒ์?ฬฦ]/g;
 
-  let WORD_LIST;
+  const WORD_LIST_URLS = [
+    ['normal', 'data/words.json'],
+  ], WORD_LISTS = {};
+  let currentWordList = 'normal';
 
   // ################################
   // Utilities
@@ -16,23 +20,77 @@ $(function () {
     return results === null ? "" : decodeURIComponent(results[1]);
   }
 
+  function showScene(name) {
+    $('.scene').hide();
+    $('#scene-' + name).show();
+  }
+
+  function showCover(name) {
+    $('#cover-wrapper').show();
+    $('.cover').hide();
+    if (name) {
+      $('#cover-' + name).show();
+    }
+  }
+
+  function hideCover() {
+    $('#cover-wrapper').hide();
+  }
+
   function countShift(word) {
     return (word.match(SHIFT_CHARS) || []).length;
   }
 
-  function showScene(name, callback) {
-    $('.scene').hide();
-    $('#scene-' + name).show();
-    if (callback !== void 0) callback();
+  // ################################
+  // Timer
+
+  let timerHandler = null, timerStartTime = null, timerAmount = null;
+
+  function startTimer(amountMs) {
+    stopTimer();
+    timerStartTime = Date.now();
+    timerAmount = amountMs;
+    timerHandler = window.setInterval(updateTimer, 1000. / FRAME_RATE);
+    updateTimer();
   }
 
-  function showCover(name, delay, callback) {
-    $('#cover-' + name).show();
-    setTimeout(function () {
-      $('#cover-' + name).hide();
-      if (callback !== void 0) callback();
-    }, delay);
+  function updateTimer() {
+    let remaining = timerAmount - (Date.now() - timerStartTime);
+    $('#timer').text((remaining / 1000).toFixed(1));
+    if (remaining <= 0) {
+      stopTimer();
+      setupSummary();
+    }
   }
+
+  function stopTimer() {
+    if (timerHandler !== null) {
+      window.clearInterval(timerHandler);
+      timerHandler = null;
+    }
+  }
+
+  // ################################
+  // Battle
+
+  function setupBattle() {
+    startTimer(TIME_LIMIT);
+    showScene('battle');
+    $('#answer-box').focus();
+  }
+
+  function nextQuestion() {
+
+  }
+
+  // ################################
+  // Summary
+
+  function setupSummary() {
+    showScene('summary');
+  }
+
+  $('#back-button').click(setupMenu);
 
   // ################################
   // Menu
@@ -41,9 +99,21 @@ $(function () {
     showScene('menu');
   }
 
-  $('#start-button').click(function () {
-
-  });
+  function showCountdown() {
+    showScene('countdown');
+    let countdownCount = 4;
+    function decrementCountdown() {
+      countdownCount--;
+      if (countdownCount === 0) {
+        setupBattle();
+      } else {
+        $('#countdown-number').text(countdownCount);
+        setTimeout(decrementCountdown, 500);
+      }
+    }
+    decrementCountdown();
+  }
+  $('#start-button').click(showCountdown);
 
 	// ################################
   // Preloading and screen resizing
@@ -61,7 +131,7 @@ $(function () {
     $('#game').css('transform', 'scale(' + ratio + ')');
   }
 
-  let numResourcesLeft = 1;
+  let numResourcesLeft = WORD_LIST_URLS.length;
 
   function decrementPreload (kidding) {
     if (kidding !== 'kidding') numResourcesLeft--;
@@ -73,9 +143,11 @@ $(function () {
   }
   decrementPreload('kidding');
 
-  $.getJSON('data/words.json', function (data) {
-    WORD_LIST = data;
-    decrementPreload();
+  WORD_LIST_URLS.forEach(function (entry) {
+    $.getJSON(entry[1], function (data) {
+      WORD_LISTS[entry[0]] = data;
+      decrementPreload();
+    });
   });
 
   resizeScreen();
