@@ -8,7 +8,6 @@ import json
 NORMAL_CHARS = set('ๅภถุคึตจขชๆไำพัะนีรยบลฟหกด้เส่าวงผปแอิมืทใฝ')
 SHIFT_CHARS = set('๑๒๓๔๕๖๗๘๙๐ฎูฑธํณ๊ฯญฐฤฆฏโฌ็ษ๋ศซฉฮฺฒ์ฬฦ')
 ALL_CHARS = NORMAL_CHARS | SHIFT_CHARS
-MIN_LENGTH = 4
 
 # Uncomment to check the characters. Should only miss non-typable ones
 # for x in range(0xe01, 0xe5c):
@@ -19,6 +18,7 @@ MIN_LENGTH = 4
 def main():
   parser = argparse.ArgumentParser()
   parser.add_argument('-v', '--verbose', action='store_true')
+  parser.add_argument('-m', '--min-length', type=int, default=4)
   parser.add_argument('-r', '--shift-rate', type=float, default=.3)
   parser.add_argument('-o', '--outfile')
   parser.add_argument('infile')
@@ -33,7 +33,7 @@ def main():
     for line in fin:
       word = line.strip()
       num_chars = len(word)
-      if (num_chars < MIN_LENGTH 
+      if (num_chars < args.min_length
           or any(x not in ALL_CHARS for x in word)):
         continue
       num_shifts = sum(x in SHIFT_CHARS for x in word)

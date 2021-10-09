@@ -153,6 +153,7 @@ body {
 .summary-small {
   font-size: 20px;
   color: #888;
+  margin-bottom: 10px;
 }
 #back-button {
   position: absolute;
