@@ -10,6 +10,13 @@
   user-select: none;
 }
 
+.centerize, .btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .btn {
   box-sizing: content-box;
   border-radius: 10px;
@@ -23,7 +30,7 @@
 }
 .btn:active {
   cursor: pointer;
-  background-color: #ccc;
+  background-color: #aaa;
   color: black;
 }
 
@@ -61,7 +68,19 @@ body {
 }
 
 /* ################################ */
-/* Menu */
+/* preload scene */
+
+#scene-preload > div {
+  height: 100%;
+}
+
+#pane-loading {
+  font-size: 30px;
+  text-align: center;
+}
+
+/* ################################ */
+/* menu scene */
 
 #big-title {
   position: absolute;
@@ -77,6 +96,6 @@ body {
 }
 #start-button {
   position: absolute;
-  top: 250px; left: 250px; right: 250px; height: 80px; line-height: 80px;
+  top: 250px; left: 250px; right: 250px; height: 80px;
   font-size: 30px;
 }
