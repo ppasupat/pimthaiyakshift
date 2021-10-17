@@ -16,10 +16,10 @@ A simple Thai typing game.
     until the ratio of shift characters to all characterss exceeds 0.3. 
     Frequent shift characters count as 0.5 times other shift characters.
 
-* `wikititle.json`: Thai Wikipedia titles
+* `wikititles.json`: Thai Wikipedia titles
 
     ```bash
-    python3 filter.py wikititles -i <path_to_wiki_titles> data/wikititles.json -m 5 -M 15 -s 2 -r .3 -e .5
+    python3 filter.py wikititles -i <path_to_wiki_titles> -o data/wikititles.json -m 5 -M 15 -s 2 -r .3 -e .5
     ```
 
     The titles are extracted by running [WikiExtractor](https://github.com/attardi/wikiextractor)
@@ -27,6 +27,12 @@ A simple Thai typing game.
 
     ```bash
     grep -r 'title=".*"' -o -h text/ | sed 's/title="\(.*\)"/\1/' > wiki-titles.txt
+    ```
+
+* `names.json`: Thai names from PyThaiNLP
+
+    ```bash
+    python3 filter.py thainames -o data/names.json -m 5 -M 15 -s 2 -r .3 -e .5
     ```
 
 ## Planned word lists

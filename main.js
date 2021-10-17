@@ -20,6 +20,11 @@ $(function () {
         '2<div class=countdown-small>(หนังอินเดีย)</div>',
         '3<div class=countdown-small>(เพลงบริตนีย์ สเปียส์)</div>'],
     },
+    {
+      name: 'ชื่อ-สกุล',
+      url: 'data/names.json',
+      countdown: ['หนึ่งฤทัย', 'สองเมือง', 'สามภักดี'],
+    },
   ];
   let currentWordList = 0;
 

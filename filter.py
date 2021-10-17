@@ -5,6 +5,7 @@ import collections
 import json
 import re
 
+from pythainlp import corpus 
 from pythainlp.util import collate
 
 NORMAL_CHARS = set('ๅภถุคึตจขชๆไำพัะนีรยบลฟหกด้เส่าวงผปแอิมืทใฝ /-')
@@ -29,8 +30,7 @@ BAD_WIKI_TITLES = re.compile(
 
 def get_word_iter(args):
     if args.words_source == 'pythainlp':
-        from pythainlp.corpus import thai_words
-        for word in thai_words():
+        for word in corpus.thai_words():
             yield word
     elif args.words_source == 'wikititles':
         # Load the Wikipedia titles from a file
@@ -42,6 +42,13 @@ def get_word_iter(args):
                 if BAD_WIKI_TITLES.match(word):
                     continue
                 yield word.strip()
+    elif args.words_source == 'thainames':
+        for word in corpus.thai_family_names():
+            yield word
+        for word in corpus.thai_female_names():
+            yield word
+        for word in corpus.thai_male_names():
+            yield word
     else:
         raise ValueError('Unrecognized source {}'.format(args.words_source))
 
