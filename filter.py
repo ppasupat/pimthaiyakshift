@@ -3,6 +3,7 @@
 import argparse
 import collections
 import json
+import re
 
 from pythainlp.util import collate
 
@@ -21,24 +22,28 @@ NUMBER_MAP = {chr(ord('0') + x): chr(ord('๐') + x) for x in range(10)}
 #     if chr(x) not in ALL_CHARS:
 #         print(hex(x))
 
+BAD_WIKI_TITLES = re.compile(
+        r'[คพร]\.ศ\. ?[๐๑๒๓๔๕๖๗๘๙]*'    # Years
+        )
 
-def get_word_iter(words_source):
-    if words_source == 'pythainlp':
+
+def get_word_iter(args):
+    if args.words_source == 'pythainlp':
         from pythainlp.corpus import thai_words
         for word in thai_words():
             yield word
+    elif args.words_source == 'wikititles':
+        # Load the Wikipedia titles from a file
+        with open(args.infile) as fin:
+            for word in fin:
+                # Change number to Thai number
+                for x, y in NUMBER_MAP.items():
+                    word = word.replace(x, y)
+                if BAD_WIKI_TITLES.match(word):
+                    continue
+                yield word.strip()
     else:
-        # Assume it's a filename.
-        with open(words_source) as fin:
-            for line in fin:
-                yield line.strip()
-
-
-def preprocess_word(word):
-    # Change number to Thai number
-    for x, y in NUMBER_MAP.items():
-        word = word.replace(x, y)
-    return word.strip()
+        raise ValueError('Unrecognized source {}'.format(args.words_source))
 
 
 def main():
@@ -46,8 +51,10 @@ def main():
     parser.add_argument('-v', '--verbose', action='store_true')
     parser.add_argument('-m', '--min-length', type=int, default=5)
     parser.add_argument('-M', '--max-length', type=int, default=15)
+    parser.add_argument('-s', '--min-num-shifts', type=float, default=2.)
     parser.add_argument('-r', '--shift-rate', type=float, default=.3)
     parser.add_argument('-e', '--easy-shift-weight', type=float, default=.5)
+    parser.add_argument('-i', '--infile')
     parser.add_argument('-o', '--outfile')
     parser.add_argument('words_source')
     args = parser.parse_args()
@@ -57,8 +64,7 @@ def main():
     score_to_words = {}
 
     # Read the list of words and record the scores.
-    for word in get_word_iter(args.words_source):
-        word = preprocess_word(word)
+    for word in get_word_iter(args):
         num_chars = len(word)
         if (num_chars < args.min_length
                 or num_chars > args.max_length
@@ -67,7 +73,7 @@ def main():
         num_shifts = (
                 sum(x in HARD_SHIFT_CHARS for x in word)
                 + args.easy_shift_weight * sum(x in EASY_SHIFT_CHARS for x in word))
-        if num_shifts < 1:
+        if num_shifts < args.min_num_shifts:
             continue
         score = round(100 * (num_shifts - args.shift_rate * num_chars))
         score_to_words.setdefault(score, set()).add(word)
