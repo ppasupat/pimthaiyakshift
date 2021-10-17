@@ -6,10 +6,22 @@ $(function () {
   const TIME_LIMIT = 60000;
   const SHIFT_CHARS = /[%+๑๒๓๔ู฿๕๖๗๘๙๐"ฎฑธํณ๊ฯญฐ,ฅฤฆฏโฌ็ษ๋ศซ.()ฉฮฺฒ์?ฬฦ]/g;
 
-  const WORD_LIST_URLS = [
-    ['normal', 'data/words.json'],
-  ], WORD_LISTS = {};
-  let currentWordList = 'normal';
+  const WORD_LISTS = [
+    {
+      name: 'คำทั่วไป',
+      url: 'data/words.json',
+      countdown: ['หนึ่ง', 'สอง', 'สาม'],
+    },
+    {
+      name: 'วิกิพีเดีย',
+      url: 'data/wikititles.json',
+      countdown: [
+        '1<div class=countdown-small>(อัลบั้มเดอะบีเทิลส์)</div>',
+        '2<div class=countdown-small>(หนังอินเดีย)</div>',
+        '3<div class=countdown-small>(เพลงบริตนีย์ สเปียส์)</div>'],
+    },
+  ];
+  let currentWordList = 0;
 
   // ################################
   // Utilities
@@ -85,8 +97,8 @@ $(function () {
 
   function nextQuestion() {
     let targetIndex = Math.floor(
-      Math.random() * WORD_LISTS[currentWordList].length);
-    targetWord = WORD_LISTS[currentWordList][targetIndex];
+      Math.random() * WORD_LISTS[currentWordList].words.length);
+    targetWord = WORD_LISTS[currentWordList].words[targetIndex];
     $('#target-word').text(targetWord);
     showScore();
   }
@@ -123,8 +135,29 @@ $(function () {
   // Menu
 
   function setupMenu() {
+    setListName();
     showScene('menu');
   }
+
+  function setListName() {
+    $('#list-name').text(WORD_LISTS[currentWordList].name);
+  }
+
+  $('#list-prev').click(function () {
+    currentWordList--;
+    if (currentWordList < 0) {
+      currentWordList = WORD_LISTS.length - 1
+    };
+    setListName();
+  });
+
+  $('#list-next').click(function () {
+    currentWordList++;
+    if (currentWordList >= WORD_LISTS.length) {
+      currentWordList = 0;
+    }
+    setListName();
+  });
 
   function showCountdown() {
     showScene('countdown');
@@ -134,7 +167,8 @@ $(function () {
       if (countdownCount === 0) {
         setupBattle();
       } else {
-        $('#countdown-number').text(countdownCount);
+        $('#countdown-number').html(
+          WORD_LISTS[currentWordList].countdown[countdownCount - 1]);
         setTimeout(decrementCountdown, 500);
       }
     }
@@ -158,7 +192,7 @@ $(function () {
     $('#game').css('transform', 'scale(' + ratio + ')');
   }
 
-  let numResourcesLeft = WORD_LIST_URLS.length;
+  let numResourcesLeft = WORD_LISTS.length;
 
   function decrementPreload (kidding) {
     if (kidding !== 'kidding') numResourcesLeft--;
@@ -170,9 +204,9 @@ $(function () {
   }
   decrementPreload('kidding');
 
-  WORD_LIST_URLS.forEach(function (entry) {
-    $.getJSON(entry[1], function (data) {
-      WORD_LISTS[entry[0]] = data;
+  WORD_LISTS.forEach(function (entry) {
+    $.getJSON(entry.url, function (data) {
+      entry.words = data;
       decrementPreload();
     });
   });

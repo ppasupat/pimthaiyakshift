@@ -80,6 +80,10 @@ body {
 
 #countdown-number {
   font-size: 100px;
+  text-align: center;
+}
+.countdown-small {
+  font-size: 40px;
 }
 
 /* ################################ */
@@ -87,14 +91,32 @@ body {
 
 #big-title {
   position: absolute;
-  left: 0; right: 0; top: 100px;
+  left: 0; right: 0; top: 70px;
   font-size: 60px;
+  text-align: center;
+}
+
+#list-selector-wrapper {
+  position: absolute;
+  left: 0; right: 0; top: 180px;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+}
+#list-prev, #list-next {
+  margin: 0 20px;
+  width: 40px;
+  text-align: center;
+  font-size: 20px;
+}
+#list-name {
+  width: 120px;
   text-align: center;
 }
 
 #start-button {
   position: absolute;
-  top: 250px; left: 230px; right: 230px; height: 80px;
+  top: 260px; left: 230px; right: 230px; height: 80px;
   font-size: 30px;
 }
 
@@ -157,6 +179,6 @@ body {
 }
 #back-button {
   position: absolute;
-  top: 250px; left: 230px; right: 230px; height: 80px;
+  top: 260px; left: 230px; right: 230px; height: 80px;
   font-size: 30px;
 }
