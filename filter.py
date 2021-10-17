@@ -45,6 +45,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-v', '--verbose', action='store_true')
     parser.add_argument('-m', '--min-length', type=int, default=5)
+    parser.add_argument('-M', '--max-length', type=int, default=15)
     parser.add_argument('-r', '--shift-rate', type=float, default=.3)
     parser.add_argument('-e', '--easy-shift-weight', type=float, default=.5)
     parser.add_argument('-o', '--outfile')
@@ -60,6 +61,7 @@ def main():
         word = preprocess_word(word)
         num_chars = len(word)
         if (num_chars < args.min_length
+                or num_chars > args.max_length
                 or any(x not in ALL_CHARS for x in word)):
             continue
         num_shifts = (
@@ -68,7 +70,7 @@ def main():
         if num_shifts < 1:
             continue
         score = round(100 * (num_shifts - args.shift_rate * num_chars))
-        score_to_words.setdefault(score, []).append(word)
+        score_to_words.setdefault(score, set()).add(word)
 
     # Keep removing words until the average score is 0.
     current_total_score = sum(score * len(words)
@@ -84,8 +86,8 @@ def main():
     remaining_words = []
     for words in score_to_words.values():
         remaining_words.extend(words)
-    print(len(remaining_words), 'words left')
     remaining_words = collate(remaining_words)
+    print(len(remaining_words), 'words left')
 
     # Dump the scored words to a file.
     if args.outfile:
