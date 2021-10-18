@@ -214,9 +214,13 @@ $(function () {
   function menuShortcutHandler(e) {
     switch (e.key) {
       case 'ArrowLeft':
+      case 'a':
+      case 'h':
         $('#list-prev').click();
         break;
       case 'ArrowRight':
+      case 'd':
+      case 'l':
         $('#list-next').click();
         break;
       case 'Enter':
