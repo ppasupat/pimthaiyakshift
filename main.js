@@ -25,6 +25,11 @@ $(function () {
       url: 'data/names.json',
       countdown: ['หนึ่งฤทัย', 'สองเมือง', 'สามภักดี'],
     },
+    {
+      name: 'สก๊อย',
+      url: 'data/skoy.json',
+      countdown: ['ณึ่ศ์ง', 'ศ๊ง', 'ษ๊ม'],
+    },
   ];
   let currentWordList = 0;
 
@@ -103,8 +108,17 @@ $(function () {
   function nextQuestion() {
     let targetIndex = Math.floor(
       Math.random() * WORD_LISTS[currentWordList].words.length);
-    targetWord = WORD_LISTS[currentWordList].words[targetIndex];
+    let targetEntry = WORD_LISTS[currentWordList].words[targetIndex];
+    let targetNote;
+    if (Array.isArray(targetEntry)) {
+      targetWord = targetEntry[0];
+      targetNote = targetEntry[1];
+    } else {
+      targetWord = targetEntry;
+      targetNote = '';
+    }
     $('#target-word').text(targetWord);
+    $('#target-note').text(targetNote);
     showScore();
   }
 
