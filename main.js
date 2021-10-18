@@ -132,9 +132,22 @@ $(function () {
       .append('<p class=summary-small>(หนึ่งคะแนนต่อ Shift)</p>')
       .append('<p>จำนวนอักขระรวม: ' + totalNumChars + '</p>');
     showScene('summary');
+    $(document).on('keyup', summaryShortcutHandler);
   }
 
-  $('#back-button').click(setupMenu);
+  $('#back-button').click(function () {
+    $(document).off('keyup', summaryShortcutHandler);
+    setupMenu();
+  });
+
+  function summaryShortcutHandler(e) {
+    switch (e.key) {
+      case 'Enter':
+      case ' ':
+        $('#back-button').click();
+        break;
+    }
+  }
 
   // ################################
   // Menu
@@ -142,6 +155,7 @@ $(function () {
   function setupMenu() {
     setListName();
     showScene('menu');
+    $(document).on('keyup', menuShortcutHandler);
   }
 
   function setListName() {
@@ -165,6 +179,7 @@ $(function () {
   });
 
   function showCountdown() {
+    $(document).off('keyup', menuShortcutHandler);
     showScene('countdown');
     let countdownCount = 4;
     function decrementCountdown() {
@@ -180,6 +195,21 @@ $(function () {
     decrementCountdown();
   }
   $('#start-button').click(showCountdown);
+
+  function menuShortcutHandler(e) {
+    switch (e.key) {
+      case 'ArrowLeft':
+        $('#list-prev').click();
+        break;
+      case 'ArrowRight':
+        $('#list-next').click();
+        break;
+      case 'Enter':
+      case ' ':
+        $('#start-button').click();
+        break;
+    }
+  }
 
 	// ################################
   // Preloading and screen resizing
