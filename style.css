@@ -20,17 +20,17 @@
 .btn {
   box-sizing: content-box;
   border-radius: 10px;
-  color: #ddd;
+  color: #afafaf;
   text-align: center;
-  border: 1px solid #aaa;
+  border: 1px solid #afafaf;
 }
 .btn:hover {
   cursor: pointer;
-  background-color: #888;
+  background-color: #666;
 }
 .btn:active {
   cursor: pointer;
-  background-color: #aaa;
+  background-color: #afafaf;
   color: black;
 }
 
@@ -42,7 +42,7 @@ html {
 body {
   height: 100%;
   background-color: black;
-  color: #aaa;
+  color: #afafaf;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -52,7 +52,7 @@ body {
 #game {
   position: relative;
   background-color: black;
-  border: 1px solid #aaa;
+  border: 1px solid #afafaf;
   width: 700px;
   height: 400px;
   overflow: hidden;
@@ -172,7 +172,7 @@ body {
   font-size: 40px;
   line-height: 80px;
   text-align: center;
-  color: #aaa;
+  color: #afafaf;
   width: 100%;
   border: none;
   outline: none;
