@@ -41,8 +41,3 @@ A simple Thai typing game.
     (Skoy language is pretty old, you know.)
     So I manually collected parallel sentences from the remaining records of the 
     language usage.
-
-## Planned word lists
-
-* Loan words from more obscure languages (e.g., foreign names, technical terms, religious terms).
-* Special characters (e.g., Thai numerals, mixing with English), though this might be untypable for some machines.
