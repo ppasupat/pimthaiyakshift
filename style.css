@@ -186,12 +186,19 @@ body {
 
 #summary-pane {
   position: absolute;
-  top: 50px; left: 0; right: 0;
+  top: 40px; left: 0; right: 0;
   text-align: center;
-  font-size: 35px;
+}
+.summary-medium {
+  font-size: 30px;
+  margin-top: 10px;
+}
+.summary-large {
+  font-size: 40px;
+  margin-top: 0;
 }
 .summary-small {
   font-size: 20px;
   color: #888;
-  margin-bottom: 10px;
+  margin-top: 0;
 }

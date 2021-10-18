@@ -142,9 +142,10 @@ $(function () {
 
   function setupSummary() {
     $('#summary-pane').empty()
-      .append('<p>คะแนน: ' + currentScore + '</p>')
+      .append('<p class=summary-large>คะแนน: ' + currentScore + '</p>')
       .append('<p class=summary-small>(หนึ่งคะแนนต่อ Shift)</p>')
-      .append('<p>จำนวนอักขระรวม: ' + totalNumChars + '</p>');
+      .append('<p class=summary-medium>จำนวนอักขระรวม: ' + totalNumChars + '</p>')
+      .append('<p class=summary-medium>ชุดคำ: ' + WORD_LISTS[currentWordList].name + '</p>');
     showScene('summary');
     $(document).on('keyup', summaryShortcutHandler);
   }
