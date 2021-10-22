@@ -1,3 +1,5 @@
+# License for the Code
+
 MIT License
 
 Copyright (c) 2021 Panupong (Ice) Pasupat
@@ -19,3 +21,16 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+# License for the Word Lists
+
+* `words.json` (derived from the [PyThaiNLP word list](https://github.com/PyThaiNLP/pythainlp)):
+  [CC0 1.0 Public Domain Dedication](https://creativecommons.org/publicdomain/zero/1.0/)
+* `wikititles.json` (derived from Wikipedia dump):
+  [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+* `names.json` (derived from the [Thai Male and Female Names Corpus](https://github.com/korkeatw/thai-names-corpus/)):
+  [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+* `skoy.json` ([manually curated](https://docs.google.com/spreadsheets/d/1-tB9bV8ihteGjQ628u2lm8RG0Mrw8w6Xn1yPObY6vyI/edit?usp=sharing)):
+  [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+  
+  

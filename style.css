@@ -131,6 +131,18 @@ body {
   text-align: center;
 }
 
+#github-link {
+  position: absolute;
+  right: 10px; bottom: 10px;
+  background: url('img/GitHub-Mark-Light-32px.png');
+  opacity: 50%;
+  height: 32px;
+  width: 32px;
+}
+#github-link:hover, #github-link:active {
+  opacity: 90%;
+}
+
 /* ################################ */
 /* battle scene */
 
