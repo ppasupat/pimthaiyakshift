@@ -37,9 +37,12 @@ def get_word_iter(args):
     # Load the Wikipedia titles from a file
     with open(args.infile) as fin:
       for word in fin:
-        # Change number to Thai number
+        # Change arabic number to Thai number, or the other way around
         for x, y in NUMBER_MAP.items():
-          word = word.replace(x, y)
+          if args.arabic:
+            word = word.replace(y, x)
+          else:
+            word = word.replace(x, y)
         if BAD_WIKI_TITLES.match(word):
           continue
         yield word.strip()
@@ -62,6 +65,7 @@ def main():
   parser.add_argument('-s', '--min-num-shifts', type=float, default=2.)
   parser.add_argument('-r', '--shift-rate', type=float, default=.3)
   parser.add_argument('-e', '--easy-shift-weight', type=float, default=.5)
+  parser.add_argument('-a', '--arabic', action='store_true')
   parser.add_argument('-i', '--infile')
   parser.add_argument('-o', '--outfile')
   parser.add_argument('words_source')
