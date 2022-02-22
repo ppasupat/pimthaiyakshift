@@ -4,7 +4,7 @@ A simple Thai typing game.
 
 The score (number of shift characters) is based on the
 [Kedmanee keyboard layout](https://en.wikipedia.org/wiki/Thai_Kedmanee_keyboard_layout).
-Feel free to fork to support [other](https://en.wikipedia.org/wiki/Thai_Pattachote_keyboard_layout) [layouts](https://manoonchai.com/).
+Feel free to fork to support other layouts!
 
 ## Current word lists
 
@@ -17,8 +17,8 @@ Feel free to fork to support [other](https://en.wikipedia.org/wiki/Thai_Pattacho
     The command above collects all words with 5-15 characters from the
     [PyThaiNLP](https://pythainlp.github.io/) word list with at least
     2 shift characters.
-    Then it greedily removes words with low shift-to-non-shift ratio
-    until the ratio of shift characters to all characterss exceeds 0.3. 
+    Then it greedily removes words with low shift-to-non-shift ratios
+    until the overall ratio of shift characters to all characters exceeds 0.3. 
     Frequent shift characters count as 0.5 times other shift characters.
 
 * `wikititles.json`: Thai Wikipedia titles
@@ -27,18 +27,20 @@ Feel free to fork to support [other](https://en.wikipedia.org/wiki/Thai_Pattacho
     python3 filter.py wikititles -i <path_to_wiki_titles> -o data/wikititles.json -m 5 -M 15 -s 2 -r .3 -e .5
     ```
 
-    The titles are extracted by running [WikiExtractor](https://github.com/attardi/wikiextractor)
+    The titles were extracted by running [WikiExtractor](https://github.com/attardi/wikiextractor)
     on the Thai Wikipedia dump (Oct 2021) and then running
 
     ```bash
     grep -r 'title=".*"' -o -h text/ | sed 's/title="\(.*\)"/\1/' > wiki-titles.txt
     ```
 
-* `wikititles-arabic.json`: Thai Wikipedia titles but with arabic numerals.
+* `wikititles-arabic.json`: Thai Wikipedia titles but with arabic numerals
 
     ```bash
     python3 filter.py wikititles -i <path_to_wiki_titles> -o data/wikititles-arabic.json -m 5 -M 15 -s 2 -r .3 -e .5 -a
     ```
+    
+    Note that arabic numerals don't count toward the score in the game.
 
 * `names.json`: Thai names from PyThaiNLP
 
@@ -47,7 +49,7 @@ Feel free to fork to support [other](https://en.wikipedia.org/wiki/Thai_Pattacho
     ```
 
 * `skoy.json`: Skoy language.
-    I want to use authentic Skoy, but the original Facebook page (sowhateiei: ษม่ค่ล์มนิ๋ญฒสก๊อย) has been nuked.
+    I wanted to use authentic Skoy, but the original Facebook page (sowhateiei: ษม่ค่ล์มนิ๋ญฒสก๊อย) has been nuked.
     (Skoy language is pretty old, you know.)
     So I [manually collected parallel sentences](https://docs.google.com/spreadsheets/d/1-tB9bV8ihteGjQ628u2lm8RG0Mrw8w6Xn1yPObY6vyI/edit?usp=sharing)
     from the remnants of the language usage.
