@@ -3,7 +3,7 @@ $(function () {
 
   const SCREEN_WIDTH = 700, SCREEN_HEIGHT = 400;
   const FRAME_RATE = 30;
-  const TIME_LIMIT = 60000;
+  const TIME_LIMIT = 6000;
   const SHIFT_CHARS = /[%+๑๒๓๔ู฿๕๖๗๘๙๐"ฎฑธํณ๊ฯญฐ,ฅฤฆฏโฌ็ษ๋ศซ.()ฉฮฺฒ์?ฬฦ]/g;
 
   const WORD_LISTS = [
@@ -13,8 +13,16 @@ $(function () {
       countdown: ['หนึ่ง', 'สอง', 'สาม'],
     },
     {
-      name: 'วิกิพีเดีย',
+      name: 'วิกิพีเดีย (๑๒๓)',
       url: 'data/wikititles.json',
+      countdown: [
+        '๑<div class=countdown-small>(อัลบั้มเดอะบีเทิลส์)</div>',
+        '๒<div class=countdown-small>(หนังอินเดีย)</div>',
+        '๓<div class=countdown-small>(เพลงบริตนีย์ สเปียส์)</div>'],
+    },
+    {
+      name: 'วิกิพีเดีย (123)',
+      url: 'data/wikititles-arabic.json',
       countdown: [
         '1<div class=countdown-small>(อัลบั้มเดอะบีเทิลส์)</div>',
         '2<div class=countdown-small>(หนังอินเดีย)</div>',
