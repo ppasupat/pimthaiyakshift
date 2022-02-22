@@ -3,7 +3,7 @@ $(function () {
 
   const SCREEN_WIDTH = 700, SCREEN_HEIGHT = 400;
   const FRAME_RATE = 30;
-  const TIME_LIMIT = 6000;
+  const TIME_LIMIT = 60000;
   const SHIFT_CHARS = /[%+๑๒๓๔ู฿๕๖๗๘๙๐"ฎฑธํณ๊ฯญฐ,ฅฤฆฏโฌ็ษ๋ศซ.()ฉฮฺฒ์?ฬฦ]/g;
 
   const WORD_LISTS = [
