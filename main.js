@@ -5,6 +5,7 @@ $(function () {
   const FRAME_RATE = 30;
   const TIME_LIMIT = 60000;
   const SHIFT_CHARS = /[%+๑๒๓๔ู฿๕๖๗๘๙๐"ฎฑธํณ๊ฯญฐ,ฅฤฆฏโฌ็ษ๋ศซ.()ฉฮฺฒ์?ฬฦ]/g;
+  const THAI_NUMBERS = '๐๑๒๓๔๕๖๗๘๙';
 
   const WORD_LISTS = [
     {
@@ -71,6 +72,10 @@ $(function () {
     return (word.match(SHIFT_CHARS) || []).length;
   }
 
+  function formatNum(num) {
+    return ('' + num).replace(/[0-9]/g, x => THAI_NUMBERS[+x]);
+  }
+
   // ################################
   // Battle
 
@@ -86,7 +91,7 @@ $(function () {
 
   function updateTimer() {
     let remaining = timerAmount - (Date.now() - timerStartTime);
-    $('#hud-timer').text((remaining / 1000).toFixed(1));
+    $('#hud-timer').text(formatNum((remaining / 1000).toFixed(1)));
     if (remaining <= 0) {
       stopTimer();
       setupSummary();
@@ -140,9 +145,9 @@ $(function () {
   }
 
   function showScore() {
-    $('#hud-score').text(currentScore)
+    $('#hud-score').text(formatNum(currentScore))
       .append('<span class=score-preview>' +
-        ' + ' + countShift(targetWord) + '</span>');
+        ' + ' + formatNum(countShift(targetWord)) + '</span>');
   }
 
   // ################################
@@ -150,9 +155,9 @@ $(function () {
 
   function setupSummary() {
     $('#summary-pane').empty()
-      .append('<p class=summary-large>คะแนน: ' + currentScore + '</p>')
+      .append('<p class=summary-large>คะแนน: ' + formatNum(currentScore) + '</p>')
       .append('<p class=summary-small>(หนึ่งคะแนนต่อ Shift)</p>')
-      .append('<p class=summary-medium>จำนวนอักขระรวม: ' + totalNumChars + '</p>')
+      .append('<p class=summary-medium>จำนวนอักขระรวม: ' + formatNum(totalNumChars) + '</p>')
       .append('<p class=summary-medium>ชุดคำ: ' + WORD_LISTS[currentWordList].name + '</p>');
     showScene('summary');
     $(document).on('keyup', summaryShortcutHandler);
@@ -166,7 +171,6 @@ $(function () {
   function summaryShortcutHandler(e) {
     switch (e.key) {
       case 'Enter':
-      case ' ':
         $('#back-button').click();
         break;
     }
@@ -232,7 +236,6 @@ $(function () {
         $('#list-next').click();
         break;
       case 'Enter':
-      case ' ':
         $('#start-button').click();
         break;
     }
