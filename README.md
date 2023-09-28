@@ -51,5 +51,4 @@ Feel free to fork to support other layouts!
 * `skoy.json`: Skoy language.
     I wanted to use authentic Skoy, but the original Facebook page (sowhateiei: ษม่ค่ล์มนิ๋ญฒสก๊อย) has been nuked.
     (Skoy language is pretty old, you know.)
-    So I [manually collected parallel sentences](https://docs.google.com/spreadsheets/d/1-tB9bV8ihteGjQ628u2lm8RG0Mrw8w6Xn1yPObY6vyI/edit?usp=sharing)
-    from the remnants of the language usage.
+    So I manually collected parallel sentences from the remnants of the language usage.
